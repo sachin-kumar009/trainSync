@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Control System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@heroicons/react@2.0.18/24/outline/index.js" type="module"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Login Page -->
+        <div id="login-page" class="page active">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="logo">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3 4-3 9-3 9 1.34 9 3z"></path>
+                                <path d="M21 5c0 1.66-4 3-9 3S3 6.66 3 5s4-3 9-3 9 1.34 9 3z"></path>
+                                <path d="M21 12v7c0 1.66-4 3-9 3s-9-1.34-9-3v-7"></path>
+                            </svg>
+                            <h1>Railway Control System</h1>
+                        </div>
+                    </div>
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="username">Username</label>
+                            <input type="text" id="username" class="form-control" placeholder="Enter username" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
+                    </form>
+                    <div id="login-error" class="error-message hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <h2>Northern Railway - Delhi Division</h2>
+                    <div class="network-status">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                        </svg>
+                        <span class="status status--success">Network Health: Good</span>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="clock" id="clock">00:00:00</div>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                        <svg id="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                        </svg>
+                        <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <nav class="nav">
+                        <a href="#dashboard" class="nav-link active">Dashboard</a>
+                        <a href="#station" class="nav-link">Station Search</a>
+                        <button id="logout-btn" class="btn btn--secondary">Logout</button>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="dashboard-grid">
+                    <!-- Live Digital Twin Map -->
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Live Digital Twin Map</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="track-map">
+                                <svg width="100%" height="200" viewBox="0 0 400 200">
+                                    <!-- Track lines -->
+                                    <line x1="50" y1="50" x2="350" y2="50" stroke="var(--color-border)" stroke-width="4"></line>
+                                    <line x1="50" y1="100" x2="350" y2="100" stroke="var(--color-border)" stroke-width="4"></line>
+                                    <line x1="50" y1="150" x2="350" y2="150" stroke="var(--color-border)" stroke-width="4"></line>
+                                    
+                                    <!-- Train representations -->
+                                    <rect id="train-1" x="80" y="40" width="40" height="20" fill="#FFC185" rx="4">
+                                        <animate attributeName="x" values="80;280;80" dur="10s" repeatCount="indefinite"></animate>
+                                    </rect>
+                                    <rect id="train-2" x="120" y="90" width="40" height="20" fill="#1FB8CD" rx="4">
+                                        <animate attributeName="x" values="120;320;120" dur="15s" repeatCount="indefinite"></animate>
+                                    </rect>
+                                    <rect id="train-3" x="160" y="140" width="40" height="20" fill="#B4413C" rx="4">
+                                        <animate attributeName="x" values="160;260;160" dur="12s" repeatCount="indefinite"></animate>
+                                    </rect>
+                                    
+                                    <!-- Station markers -->
+                                    <circle cx="100" cy="100" r="8" fill="var(--color-primary)"></circle>
+                                    <circle cx="300" cy="100" r="8" fill="var(--color-primary)"></circle>
+                                    <text x="100" y="180" text-anchor="middle" fill="var(--color-text)" font-size="12">NDLS</text>
+                                    <text x="300" y="180" text-anchor="middle" fill="var(--color-text)" font-size="12">BCT</text>
+                                </svg>
+                                <div class="legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: #FFC185;"></div>
+                                        <span>Express</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: #1FB8CD;"></div>
+                                        <span>Passenger</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: #B4413C;"></div>
+                                        <span>Goods</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendations -->
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>AI Recommendations</h3>
+                        </div>
+                        <div class="card__body">
+                            <div id="recommendations-list" class="recommendations">
+                                <!-- Recommendations will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KPI Metrics -->
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>KPI Metrics</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="kpi-section">
+                                <h4>Average Delay</h4>
+                                <div class="delay-bar">
+                                    <div id="delay-progress" class="delay-progress" style="width: 50%;"></div>
+                                </div>
+                                <span id="delay-text">5 minutes</span>
+                            </div>
+                            <div class="kpi-section">
+                                <h4>Throughput</h4>
+                                <div class="chart-container" style="position: relative; height: 150px;">
+                                    <canvas id="throughput-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="kpi-section">
+                                <div class="override-control">
+                                    <div class="override-count">
+                                        <span class="count-circle">3</span>
+                                        <span>Manual Overrides</span>
+                                    </div>
+                                    <button id="signal-control-btn" class="btn btn--outline">Manual Signal Control</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Bar -->
+                <div class="control-bar">
+                    <button id="accept-btn" class="btn btn--primary">Accept Recommendation</button>
+                    <button id="override-btn" class="btn btn--secondary">Override Signal</button>
+                    <button id="simulation-btn" class="btn btn--outline">Trigger Disruption Simulation</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Station Search Page -->
+        <div id="station-page" class="page">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <h2>Station Search</h2>
+                </div>
+                <div class="topbar-right">
+                    <button id="theme-toggle-station" class="theme-toggle" aria-label="Toggle theme">
+                        <svg id="sun-icon-station" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                        </svg>
+                        <svg id="moon-icon-station" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <nav class="nav">
+                        <a href="#dashboard" class="nav-link">Dashboard</a>
+                        <a href="#station" class="nav-link active">Station Search</a>
+                        <button id="logout-btn-station" class="btn btn--secondary">Logout</button>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="station-content">
+                <div class="search-form">
+                    <form id="station-search-form">
+                        <div class="form-group">
+                            <label class="form-label" for="station-code">Station Code</label>
+                            <input type="text" id="station-code" class="form-control" placeholder="Enter station code (e.g., NDLS, BCT)" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary">Search Trains</button>
+                    </form>
+                </div>
+
+                <div id="train-results" class="train-results">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Train Schedule for <span id="current-station">NDLS</span></h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="train-table-container">
+                                <table id="train-table" class="train-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Train No.</th>
+                                            <th>Train Name</th>
+                                            <th>Expected Arrival</th>
+                                            <th>Actual Arrival</th>
+                                            <th>Platform</th>
+                                            <th>Delay</th>
+                                            <th>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="train-table-body">
+                                        <!-- Train data will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Signal Control -->
+        <div id="signal-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Manual Signal Control</h3>
+                    <button id="close-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>This feature allows manual override of automatic signal controls.</p>
+                    <div class="signal-controls">
+                        <button class="btn btn--primary">Signal A - Green</button>
+                        <button class="btn btn--secondary">Signal B - Yellow</button>
+                        <button class="btn btn--outline">Signal C - Red</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast notifications -->
+        <div id="toast" class="toast hidden">
+            <div id="toast-message"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
