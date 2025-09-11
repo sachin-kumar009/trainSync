@@ -1260,7 +1260,7 @@ select.form-control {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .topbar {
     flex-direction: column;
     align-items: flex-start;
