@@ -924,6 +924,24 @@ select.form-control {
   background: var(--color-bg-1);
 }
 
+.preview-card {
+  position: absolute;
+  top: 220px; /* just below the map */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  padding: 15px;
+  transition: 0.3s ease;
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
+
 .legend {
   display: flex;
   justify-content: center;
