@@ -511,6 +511,29 @@ function setupEventHandlers() {
             }
         });
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+          const previewCard = document.getElementById("map-preview");
+          const previewTitle = document.getElementById("preview-title");
+          const previewCode = document.getElementById("preview-code");
+          const previewStatus = document.getElementById("preview-status");
+        
+          // Example: add click listeners to station circles
+          const stations = document.querySelectorAll(".track-map circle");
+          stations.forEach(station => {
+            station.addEventListener("click", () => {
+              const stationName = station.getAttribute("data-name") || "Unknown";
+              const stationCode = station.getAttribute("data-code") || "N/A";
+        
+              previewTitle.textContent = `Station: ${stationName}`;
+              previewCode.textContent = stationCode;
+              previewStatus.textContent = "On Time";
+        
+              previewCard.classList.remove("hidden");
+            });
+          });
+        });
+
     
     // Logout buttons
     const logoutBtns = document.querySelectorAll('#logout-btn, #logout-btn-station');
