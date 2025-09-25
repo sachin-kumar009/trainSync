@@ -99,11 +99,18 @@
                                     </rect>
                                     
                                     <!-- Station markers -->
-                                    <circle cx="100" cy="100" r="8" fill="var(--color-primary)"></circle>
-                                    <circle cx="300" cy="100" r="8" fill="var(--color-primary)"></circle>
+                                    <circle cx="100" cy="100" r="8" fill="var(--color-primary)" data-name="New Delhi" data-code="NDLS"></circle>
+                                    <circle cx="300" cy="100" r="8" fill="var(--color-primary)" data-name="Mumbai Central" data-code="BCT"></circle>
                                     <text x="100" y="180" text-anchor="middle" fill="var(--color-text)" font-size="12">NDLS</text>
                                     <text x="300" y="180" text-anchor="middle" fill="var(--color-text)" font-size="12">BCT</text>
                                 </svg>
+                                
+                                <div id="map-preview" class="preview-card hidden">
+                                    <h4 id="preview-title">Station Preview</h4>
+                                    <p><strong>Code:</strong> <span id="preview-code">NDLS</span></p>
+                                    <p><strong>Status:</strong> <span id="preview-status">On Time</span></p>
+                                </div>
+                                
                                 <div class="legend">
                                     <div class="legend-item">
                                         <div class="legend-color" style="background: #FFC185;"></div>
